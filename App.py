@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
 CORS(app)
@@ -24,6 +24,11 @@ class Book(db.Model):
         self.description = description
         self.price = price
 
+    def __init__(self, title, description, price):
+        self.title = title
+        self.description = description
+        self.price = price
+
     def __str__(self):
         return str(self.id) + " " + self.title + ", " + self.description + " " + str(self.price)
 
@@ -42,18 +47,20 @@ books_schema = BookSchema(many=True)
 
 # Create a book
 @app.route("/api/v1/books", methods=['POST'])
+@cross_origin()
 def create_book():
-    id = request.json['id']
-    title = request.json['title']
-    description = request.json['description']
-    price = request.json['price']
+    data = request.get_json()
 
-    new_book = Book(id, title, description, price)
+    title = data['title']
+    description = data['description']
+    price = data['price']
+
+    new_book = Book(title, description, price)
 
     db.session.add(new_book)
     db.session.commit()
 
-    return "received"
+    return book_schema.jsonify(new_book)
 
 
 # Get all books
@@ -83,16 +90,15 @@ def get_bookByTitle(title):
 
 # Update a book
 @app.route("/api/v1/books/<id>", methods=['PUT'])
+@cross_origin()
 def update_book(id):
     book = Book.query.get(id)
 
-    title = request.json['title']
-    description = request.json['description']
-    price = request.json['price']
+    data = request.get_json()
 
-    book.title = title
-    book.description = description
-    book.price = price
+    book.title = data['title']
+    book.description = data['description']
+    book.price = data['price']
 
     db.session.commit()
 
@@ -106,7 +112,7 @@ def delete_book(id):
     db.session.delete(book)
     db.session.commit()
 
-    return "delete"
+    return book_schema.jsonify(book)
 
 
 # Run server

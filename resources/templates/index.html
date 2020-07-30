@@ -7,69 +7,157 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
-    <title>Document</title>
+    <title>Api Python</title>
 </head>
 
 <body>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Price</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody id="booksBody">
-        </tbody>
-    </table>
+    <div class="container">
 
+        <div id="alert-container"></div>
 
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="booksBody">
+            </tbody>
+        </table>
 
-    <!-- Modal -->
-    <form class="form-update" id="form-update" method="POST">
-        <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal" role="dialog"
-            tabindex="-1">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Edit Book
-                        </h5>
-                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
+        <button class="btn btn-primary" id="btn-add">Add Book</button>
 
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="id" placeholder="insert title">
+        <!-- Modal -->
+        <form class="form-add" id="form-add" method="POST">
+            <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal-add"
+                role="dialog" tabindex="-1">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Book
+                            </h5>
+                            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
+                        <div class="modal-body">
 
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="title" placeholder="insert title">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="id">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="title" name="title"
+                                    placeholder="insert title">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="description"
+                                    placeholder="insert description">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="price" placeholder="insert price">
+                            </div>
+
+
+
                         </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="description" placeholder="insert description">
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                            <input class="btn btn-success" type="submit" value="Save" />
                         </div>
-
-                        <div class="form-group">
-                            <input type="number" class="form-control" id="price" placeholder="insert price">
-                        </div>
-
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
-                        <input class="btn btn-success" type="submit" value="Save" />
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+
+        <!-- Modal -->
+        <form class="form-update" id="form-update" method="POST">
+            <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal"
+                role="dialog" tabindex="-1">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Book
+                            </h5>
+                            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="id">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="title" name="title"
+                                    placeholder="insert title">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="description"
+                                    placeholder="insert description">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="number" class="form-control" id="price" placeholder="insert price">
+                            </div>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                            <input class="btn btn-success" type="submit" value="Save" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Modal -->
+        <form class="form-delete" id="form-delete" method="POST">
+            <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="exampleModal-delete"
+                role="dialog" tabindex="-1">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete Book
+                            </h5>
+                            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="id">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="title" name="title"
+                                    placeholder="insert title" readonly>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+                            <input class="btn btn-danger" type="submit" id="delete" value="Delete" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"
@@ -82,99 +170,7 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 
-    <script>
-        $(document).ready(function () {
-            getTutorials()
-
-            // Get all books and display in table
-            function getTutorials() {
-                $.ajax({
-                    url: 'http://127.0.0.1:3000/api/v1/books',
-                    type: 'GET',
-                    datatype: JSON,
-                    success: function (data) {
-                        $(data).each(function (i, book) {
-                            $("#booksBody").append($("<tr>")
-                                .append($("<td>").append(book.id))
-                                .append($("<td>").append(book.title))
-                                .append($("<td>").append(book.description))
-                                .append($("<td>").append(book.price))
-                                .append($("<td>").append('<button class="btn btn-warning" id="edit"  data-id="' + book.id + '" style="margin-right:5px">Edit</button><button data-id="' + book.id + '" class="btn btn-danger" id="delete">Delete</button>'))
-                            )
-                        })
-                    }
-                })
-
-            }
-
-            $('body').on('click', '#edit', function (data) {
-                var id = $($(this)[0]).data("id")
-
-                $.ajax({
-                    url: 'http://127.0.0.1:3000//api/v1/books/' + id,
-                    type: 'GET',
-                    datatype: JSON,
-                    success: function (book) {
-                        $('.form-update #id').val(book.id);
-                        $('.form-update #title').val(book.title);
-                        $('.form-update #description').val(book.description);
-                        $('.form-update #price').val(book.price);
-                    },
-                    error: function (e) {
-                        console.log(e)
-                    }
-                })
-
-                $('#exampleModal').modal('toggle');
-
-            });
-
-            //Delete a book by ID
-            $('body').on('click', '#delete', function () {
-                var id = $($(this)[0]).data("id")
-
-                $.ajax({
-                    url: 'http://127.0.0.1:3000//api/v1/books/' + id,
-                    type: 'DELETE',
-                    datatype: JSON,
-                    success: function (data) {
-                        alert("Eliminado Correctamente")
-                    },
-                    error: function (e) {
-                        console.log(e)
-                    }
-                })
-            });
-
-            $('body').on('submit', '#form-update', function (e) {
-                e.preventDefault();
-
-                let data = {
-                    tutorialNumber: $('.form-update #id').val(),
-                    title: $('.form-update #title').val(),
-                    author: $('.form-update #description').val(),
-                    type: $('.form-update #price').val()
-                }
-
-                console.log(data.tutorialNumber)
-
-                $.ajax({
-                    url: 'http://localhost:3000/api/tutorials/' + data.tutorialNumber,
-                    method: 'PUT',
-                    dataType: 'json',
-                    data: data,
-                    success: function (data) {
-                        console.log(data);
-                        getTutorials();
-                    }
-                });
-
-
-            });
-
-
-        })
-    </script>
+    <script src="../static/main.js"></script>
 
 </body>
 
